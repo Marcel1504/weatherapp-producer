@@ -1,0 +1,19 @@
+server:
+  port: 8092
+
+spring:
+  datasource:
+    driverClassName: 'com.mysql.cj.jdbc.Driver'
+    url: 'jdbc:mysql://hausnetz:3306/wetterarnsdorf?serverTimezone=CET&useSSL=false'
+    username: 'backend'
+    password: 'SEbvTMT@j5vW'
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        id:
+          new_generator_mappings: false
+
+weatherdataproducer:
+  input:
+    weatherDataFile: 'I:\Projekte\wetterarnsdorf\config\weather.json'
