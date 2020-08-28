@@ -13,7 +13,19 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         id:
           new_generator_mappings: false
+  jackson:
+    time-zone: 'CET'
 
 weatherdataproducer:
-  input:
-    weatherDataFile: 'I:\Projekte\wetterarnsdorf\config\weather.json'
+  cronjob:
+    weatherDataUpdate: '0 0/1 * * * *'
+    weatherCamUpload: '0 0/15 * * * *'
+  inputFilePath:
+    weatherData: 'I:\Projekte\wetterarnsdorf\config\media\weather.json'
+    weatherCam: 'I:'
+  consumerServiceUrl: 'http://homenet:8091'
+  calculation:
+    rain:
+      hitCounterMax: 4096
+      amountPerHit: 295
+      acceptAsRainThresholdHits: 3
