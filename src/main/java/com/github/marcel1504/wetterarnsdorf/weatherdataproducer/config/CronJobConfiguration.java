@@ -1,4 +1,4 @@
-package com.github.marcel1504.wetterarnsdorf.weatherdataproducer.cronjob.config;
+package com.github.marcel1504.wetterarnsdorf.weatherdataproducer.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
