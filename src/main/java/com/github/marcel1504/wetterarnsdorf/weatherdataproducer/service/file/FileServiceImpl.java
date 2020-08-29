@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -33,6 +37,18 @@ public class FileServiceImpl implements FileService {
             throw new ServiceException(String.format("file %s does not exist", absoluteFilePath));
         }
         return new File(absoluteFilePath);
+    }
+
+    @Override
+    public LocalDateTime getCreationTimeOfFile(File file) {
+        BasicFileAttributes attributes;
+        try {
+            attributes = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+            FileTime fileTime = attributes.creationTime();
+            return LocalDateTime.ofInstant(fileTime.toInstant(), ZoneId.systemDefault());
+        } catch (Exception e) {
+            throw new ServiceException("Cannot read file attributes");
+        }
     }
 
 

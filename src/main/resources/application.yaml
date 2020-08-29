@@ -20,7 +20,7 @@ weatherdataproducer:
   cronjob:
     weatherDataUpdate: '0 0/10 * * * *'
     weatherDataSync: '0 0 3 * * *'
-    weatherCamUpload: '0 0/15 * * * *'
+    weatherCamUpload: '0 0/1 * * * *'
   inputFilePath:
     weatherData: 'I:\Projekte\wetterarnsdorf\config\media\weather.json'
     weatherCam: 'I:\Projekte\wetterarnsdorf\config\media\current.jpg'

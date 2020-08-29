@@ -1,9 +1,8 @@
 package com.github.marcel1504.wetterarnsdorf.weatherdataproducer.service.http.weather;
 
 import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.dto.weather.WeatherDTO;
+import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.dto.weather.cam.WeatherCamDTO;
 
-import java.io.File;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface WeatherHttpService {
@@ -12,5 +11,5 @@ public interface WeatherHttpService {
 
     void putWeatherDataSync(List<WeatherDTO> weatherDTOS);
 
-    void putWeatherCam(File file, LocalDateTime createdTimestamp);
+    void putWeatherCam(WeatherCamDTO dto);
 }
