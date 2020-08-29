@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driverClassName: 'com.mysql.cj.jdbc.Driver'
-    url: 'jdbc:mysql://hausnetz:3306/wetterarnsdorf?serverTimezone=CET&useSSL=false'
-    username: 'backend'
-    password: 'SEbvTMT@j5vW'
+    url: 'jdbc:mysql://homenet:3306/wetterarnsdorf?serverTimezone=CET&useSSL=false'
+    username: 'wetterarnsdorf'
+    password: 'RMHUYxf@RqRT4qqj7+rMxW?N'
   jpa:
     properties:
       hibernate:
@@ -18,12 +18,16 @@ spring:
 
 weatherdataproducer:
   cronjob:
-    weatherDataUpdate: '0 0/1 * * * *'
+    weatherDataUpdate: '0 0/10 * * * *'
+    weatherDataSync: '0 0 3 * * *'
     weatherCamUpload: '0 0/15 * * * *'
   inputFilePath:
     weatherData: 'I:\Projekte\wetterarnsdorf\config\media\weather.json'
-    weatherCam: 'I:'
-  consumerServiceUrl: 'http://homenet:8091'
+    weatherCam: 'I:\Projekte\wetterarnsdorf\config\media\current.jpg'
+  consumerService:
+    url: 'http://hausnetz:8091'
+    username: 'consumerusertest'
+    password: 'consumerusertest'
   calculation:
     rain:
       hitCounterMax: 4096

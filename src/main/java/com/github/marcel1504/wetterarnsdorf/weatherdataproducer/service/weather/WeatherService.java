@@ -7,4 +7,6 @@ public interface WeatherService {
     void updateRainfall();
 
     void uploadWeatherData();
+
+    void syncWeatherData();
 }

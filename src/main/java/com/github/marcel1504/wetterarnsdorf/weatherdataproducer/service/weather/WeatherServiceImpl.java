@@ -2,6 +2,7 @@ package com.github.marcel1504.wetterarnsdorf.weatherdataproducer.service.weather
 
 import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.entity.WeatherEntity;
 import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.repository.weather.WeatherRepository;
+import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.service.http.weather.WeatherHttpService;
 import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.service.weather.calculation.WeatherCalculationService;
 import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.service.weather.mapping.WeatherMappingService;
 import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.validator.weather.WeatherValidator;
@@ -29,6 +30,9 @@ public class WeatherServiceImpl implements WeatherService {
     @Autowired
     private WeatherCalculationService weatherCalculationService;
 
+    @Autowired
+    private WeatherHttpService weatherHttpService;
+
     @Override
     public void addDataFromWeatherFile() {
         WeatherEntity newWeather = weatherMappingService.mapFromWeatherFileToEntity();
@@ -53,6 +57,16 @@ public class WeatherServiceImpl implements WeatherService {
 
     @Override
     public void uploadWeatherData() {
+        List<WeatherEntity> entities = (weatherRepository.findAll(PageRequest.of(
+                0,
+                5,
+                Sort.by(Sort.Direction.DESC, "timestamp"))).getContent());
+        weatherHttpService.putWeatherDataUpdate(weatherMappingService.mapFromWeatherEntityToWeatherDTO(entities));
+    }
 
+    @Override
+    public void syncWeatherData() {
+        weatherHttpService.putWeatherDataSync(
+                weatherMappingService.mapFromWeatherEntityToWeatherDTO(weatherRepository.findAll()));
     }
 }
