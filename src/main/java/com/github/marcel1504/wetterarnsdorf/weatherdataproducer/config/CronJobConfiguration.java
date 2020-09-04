@@ -15,7 +15,7 @@ public class CronJobConfiguration implements SchedulingConfigurer {
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
-        taskScheduler.setErrorHandler(t -> log.error("CronJob Exception: {}", t));
+        taskScheduler.setErrorHandler(t -> log.error("CronJob Exception: {}", t.getMessage()));
         taskScheduler.setThreadNamePrefix("cronjob-");
         taskScheduler.initialize();
         taskRegistrar.setScheduler(taskScheduler);

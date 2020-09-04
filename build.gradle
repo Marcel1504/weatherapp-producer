@@ -9,8 +9,7 @@ version = '1.0'
 sourceCompatibility = '11'
 
 bootJar {
-	baseName = 'wetterarnsdorf-weatherdataproducer'
-	version =  '1.0'
+	archiveName = 'wetterarnsdorf-weatherdataproducer.jar'
 }
 
 configurations {
