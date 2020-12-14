@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface WeatherHttpService {
 
-    void putWeatherDataUpdate(List<WeatherDTO> weatherDTOS);
-
     void putWeatherDataSync(List<WeatherDTO> weatherDTOS);
 
     void putWeatherCam(WeatherCamDTO dto);

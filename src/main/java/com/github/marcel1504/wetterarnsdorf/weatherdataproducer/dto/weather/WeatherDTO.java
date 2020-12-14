@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 public class WeatherDTO {
     private Double temperature;
     private Integer humidity;
-    private Integer rainHit;
-    private Boolean isRain;
-    private Integer rainfall;
+    private Double rainfall;
     private Double wind;
+    private Integer windDirection;
+    private Double pressure;
     private LocalDateTime timestamp;
 }

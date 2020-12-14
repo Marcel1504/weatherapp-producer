@@ -4,6 +4,7 @@ import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.dto.weather.Weat
 import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.dto.weather.cam.WeatherCamDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -19,16 +20,12 @@ public class WeatherHttpServiceImpl implements WeatherHttpService {
     @Autowired
     private RestTemplate restTemplate;
 
-    @Override
-    public void putWeatherDataUpdate(List<WeatherDTO> weatherDTOS) {
-        restTemplate.put("/weather/update", weatherDTOS);
-    }
+    @Value("${weatherdataproducer.locationKey}")
+    private String locationKey;
 
     @Override
     public void putWeatherDataSync(List<WeatherDTO> weatherDTOS) {
-        log.info("Start weather data synchronization with consumer");
-        restTemplate.put("/weather/synchronize", weatherDTOS);
-        log.info("Synchronized {} weather data items with consumer", weatherDTOS.size());
+        restTemplate.put("/weather/synchronize?locationKey={l}", weatherDTOS, locationKey);
     }
 
     @Override
@@ -36,6 +33,7 @@ public class WeatherHttpServiceImpl implements WeatherHttpService {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("file", dto.getFile());
         body.add("creationTimestamp", dto.getCreatedTimestamp().format(DateTimeFormatter.ISO_DATE_TIME));
+        body.add("locationKey", locationKey);
 
         //request
         restTemplate.put("/weathercam", body);

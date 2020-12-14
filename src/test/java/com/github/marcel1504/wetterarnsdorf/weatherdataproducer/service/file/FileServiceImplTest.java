@@ -19,7 +19,6 @@ public class FileServiceImplTest {
 
     @Before
     public void setUp() {
-        ReflectionTestUtils.setField(fileService, "weatherDataFilePath", "datapath");
         ReflectionTestUtils.setField(fileService, "weatherCamFilePath", "campath");
         MockitoAnnotations.initMocks(this);
     }
@@ -28,7 +27,6 @@ public class FileServiceImplTest {
     public void getFileTestFail() {
         assertThrows(ServiceException.class, () -> fileService.getFile("test"));
         assertThrows(ServiceException.class, () -> fileService.getWeatherCamFile());
-        assertThrows(ServiceException.class, () -> fileService.getWeatherDataFile());
         assertThrows(ServiceException.class, () -> fileService.getCreationTimeOfFile(null));
     }
 

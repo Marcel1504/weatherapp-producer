@@ -12,5 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class WeatherCamDTO {
     private FileSystemResource file;
+    private String locationKey;
     private LocalDateTime createdTimestamp;
 }

@@ -29,8 +29,6 @@ public class WeatherDataUpdateCronJobTest {
     @Test
     public void executeTest() {
         weatherDataUpdateCronJob.execute();
-        verify(weatherService, times(1)).addDataFromWeatherFile();
-        verify(weatherService, times(1)).updateRainfall();
-        verify(weatherService, times(1)).uploadWeatherData();
+        verify(weatherService, times(1)).updateLatestWeatherData();
     }
 }

@@ -2,8 +2,10 @@ package com.github.marcel1504.wetterarnsdorf.weatherdataproducer.entity;
 
 import lombok.*;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Getter
@@ -12,32 +14,28 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "we_weather")
+@Table(name = "weatherdata")
 public class WeatherEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "dateTime")
+    private Long dateTime;
 
-    @Column(name = "temperature")
+    @Column(name = "outTemp")
     private Double temperature;
 
-    @Column(name = "humidity")
+    @Column(name = "outHumidity")
     private Integer humidity;
 
-    @Column(name = "rain_hit")
-    private Integer rainHit;
+    @Column(name = "rain")
+    private Double rainfall;
 
-    @Column(name = "is_rain")
-    private Boolean isRain;
-
-    @Column(name = "rainfall")
-    private Integer rainfall;
-
-    @Column(name = "wind")
+    @Column(name = "windGust")
     private Double wind;
 
-    @Column(name = "timestamp")
-    private Timestamp timestamp;
+    @Column(name = "windDir")
+    private Integer windDirection;
+
+    @Column(name = "pressure")
+    private Double pressure;
 }

@@ -15,16 +15,8 @@ import java.time.ZoneId;
 @Service
 public class FileServiceImpl implements FileService {
 
-    @Value("${weatherdataproducer.inputFilePath.weatherData}")
-    private String weatherDataFilePath;
-
     @Value("${weatherdataproducer.inputFilePath.weatherCam}")
     private String weatherCamFilePath;
-
-    @Override
-    public File getWeatherDataFile() {
-        return getFile(weatherDataFilePath);
-    }
 
     @Override
     public File getWeatherCamFile() {

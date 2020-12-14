@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class WeatherHttpServiceImplTest {
 
     @Before
     public void setUp() {
+        ReflectionTestUtils.setField(weatherHttpService, "locationKey", "testlocation");
         MockitoAnnotations.initMocks(this);
     }
 
@@ -48,17 +50,10 @@ public class WeatherHttpServiceImplTest {
     }
 
     @Test
-    public void putWeatherDataUpdateTest() {
-        List<WeatherDTO> list = setupWeatherDTOList();
-        weatherHttpService.putWeatherDataUpdate(list);
-        verify(restTemplate, times(1)).put("/weather/update", list);
-    }
-
-    @Test
     public void putWeatherDataSyncTest() {
         List<WeatherDTO> list = setupWeatherDTOList();
         weatherHttpService.putWeatherDataSync(list);
-        verify(restTemplate, times(1)).put("/weather/synchronize", list);
+        verify(restTemplate, times(1)).put("/weather/synchronize?locationKey={l}", list, "testlocation");
     }
 
     @Test

@@ -2,43 +2,36 @@ package com.github.marcel1504.wetterarnsdorf.weatherdataproducer.service.weather
 
 import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.dto.weather.WeatherDTO;
 import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.entity.WeatherEntity;
-import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.exception.ServiceException;
-import com.github.marcel1504.wetterarnsdorf.weatherdataproducer.service.file.FileService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 @Service
 public class WeatherMappingServiceImpl implements WeatherMappingService {
 
-    @Autowired
-    private FileService fileService;
+    @Value("${weatherdataproducer.multiplier.rain}")
+    private Double rainMultiplier;
 
-    @Autowired
-    private Jackson2ObjectMapperBuilder objectMapperBuilder;
-
-    @Override
-    public WeatherEntity mapFromWeatherFileToEntity() {
-        try {
-            return objectMapperBuilder.build().readValue(fileService.getWeatherDataFile(), WeatherEntity.class);
-        } catch (Exception e) {
-            throw new ServiceException(String.format("Could not map weather file to entity: %s", e.getMessage()));
-        }
-    }
+    @Value("${weatherdataproducer.multiplier.wind}")
+    private Double windMultiplier;
 
     @Override
     public WeatherDTO mapFromWeatherEntityToWeatherDTO(WeatherEntity entity) {
         return WeatherDTO.builder()
                 .temperature(entity.getTemperature())
                 .humidity(entity.getHumidity())
-                .isRain(entity.getIsRain())
-                .rainHit(entity.getRainHit())
-                .rainfall(entity.getRainfall())
-                .wind(entity.getWind())
-                .timestamp(entity.getTimestamp().toLocalDateTime())
+                .rainfall(entity.getRainfall() == null ? 0.0 : entity.getRainfall() * rainMultiplier)
+                .wind(entity.getWind() == null ? 0.0 : entity.getWind() * windMultiplier)
+                .windDirection(entity.getWindDirection())
+                .pressure(entity.getPressure())
+                .timestamp(LocalDateTime.ofInstant(
+                        Instant.ofEpochSecond(entity.getDateTime()),
+                        TimeZone.getDefault().toZoneId()))
                 .build();
     }
 

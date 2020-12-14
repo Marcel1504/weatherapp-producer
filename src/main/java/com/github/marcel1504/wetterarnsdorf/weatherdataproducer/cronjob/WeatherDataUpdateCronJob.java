@@ -14,8 +14,6 @@ public class WeatherDataUpdateCronJob implements CronJob {
     @Scheduled(cron = "${weatherdataproducer.cronjob.weatherDataUpdate}")
     @Override
     public void execute() {
-        weatherService.addDataFromWeatherFile();
-        weatherService.updateRainfall();
-        weatherService.uploadWeatherData();
+        weatherService.updateLatestWeatherData();
     }
 }
