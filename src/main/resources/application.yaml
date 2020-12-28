@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driverClassName: 'com.mysql.cj.jdbc.Driver'
-    url: 'jdbc:mysql://homenettest:3306/wetterstation?serverTimezone=CET&useSSL=false'
+    url: 'jdbc:mysql://wetterstation:3306/weatherstation?serverTimezone=CET&useSSL=false'
     username: 'wetterstation'
-    password: 'wetterstation'
+    password: 'yMpbGVU79iYSAfBJNc0b'
   jpa:
     properties:
       hibernate:
@@ -18,15 +18,15 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 weatherdataproducer:
-  locationKey: 'TESTORT-2'
+  locationKey: 'ARNSDORFOBERDORF'
   cronjob:
     weatherDataUpdate: '0 0 3 * * *'
     weatherDataSync: '0 0/1 * * * *'
-    weatherCamUpload: '0 0/1 * * * *'
+    weatherCamUpload: '0 0 3 * * *'
   inputFilePath:
     weatherCam: 'I:\Projekte\wetterarnsdorf\config\media\current.jpg'
   consumerService:
-    url: 'http://homenettest/wdc'
+    url: 'http://localhost:8091'
     username: 'test'
     password: 'test'
   multiplier: # factors to convert the database values to the required format

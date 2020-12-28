@@ -36,6 +36,6 @@ public class WeatherEntity {
     @Column(name = "windDir")
     private Integer windDirection;
 
-    @Column(name = "pressure")
+    @Column(name = "barometer")
     private Double pressure;
 }
