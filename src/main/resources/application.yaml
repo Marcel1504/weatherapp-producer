@@ -17,8 +17,7 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
-weatherdataproducer:
-  locationKey: 'ARNSDORFOBERDORF'
+weatherapp:
   cronjob:
     weatherDataUpdate: '0 0 3 * * *'
     weatherDataSync: '0 0/1 * * * *'
