@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "weatherdata")
+@Table(name = "archive")
 public class WeatherEntity {
 
     @Id

@@ -21,8 +21,8 @@ public interface WeatherRepository extends JpaRepository<WeatherEntity, Long> {
                     "round(w.windDir,0) AS windDir, " +
                     "round(w.windGust,1) AS windGust, " +
                     "w.dateTime " +
-                    "FROM weatherdata w",
-            countQuery = "SELECT * FROM weatherdata w",
+                    "FROM archive w",
+            countQuery = "SELECT * FROM archive w",
             nativeQuery = true)
     List<WeatherEntity> findAll();
 
@@ -35,10 +35,10 @@ public interface WeatherRepository extends JpaRepository<WeatherEntity, Long> {
                     "round(w.windDir,0) AS windDir, " +
                     "round(w.windGust,1) AS windGust, " +
                     "w.dateTime " +
-                    "FROM weatherdata w " +
+                    "FROM archive w " +
                     "ORDER BY w.dateTime DESC " +
                     "LIMIT :limit",
-            countQuery = "SELECT * FROM weatherdata w " +
+            countQuery = "SELECT * FROM archive w " +
                     "ORDER BY w.dateTime DESC" +
                     "LIMIT :limit",
             nativeQuery = true)

@@ -3,16 +3,12 @@ server:
 
 spring:
   datasource:
-    driverClassName: 'com.mysql.cj.jdbc.Driver'
-    url: 'jdbc:mysql://wetterstation:3306/weatherstation?serverTimezone=CET&useSSL=false'
-    username: 'wetterstation'
-    password: 'yMpbGVU79iYSAfBJNc0b'
+    driverClassName: 'org.sqlite.JDBC'
+    url: 'jdbc:sqlite:S:\weatherapp\media\weewx.sdb?cache=shared'
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-        id:
-          new_generator_mappings: false
+        dialect: com.github.marcel1504.weatherapp.producer.config.sql.SQLiteDialect
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -23,11 +19,11 @@ weatherapp:
     weatherDataSync: '0 0/1 * * * *'
     weatherCamUpload: '0 0 3 * * *'
   inputFilePath:
-    weatherCam: 'I:\Projekte\wetterarnsdorf\config\media\current.jpg'
-  consumerService:
-    url: 'http://localhost:8091'
-    username: 'test'
-    password: 'test'
+    weatherCam: 'S:\weatherapp\media\current.jpg'
+  consumerServices:
+    - url: 'https://localhost/w/consumer'
+      username: 'test1'
+      password: 'test1'
   multiplier: # factors to convert the database values to the required format
     rain: 10 # liters per square meters
     wind: 1 # kmh

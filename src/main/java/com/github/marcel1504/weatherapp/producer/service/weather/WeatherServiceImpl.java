@@ -2,7 +2,7 @@ package com.github.marcel1504.weatherapp.producer.service.weather;
 
 import com.github.marcel1504.weatherapp.producer.entity.WeatherEntity;
 import com.github.marcel1504.weatherapp.producer.repository.weather.WeatherRepository;
-import com.github.marcel1504.weatherapp.producer.service.http.weather.WeatherHttpService;
+import com.github.marcel1504.weatherapp.producer.service.api.weather.WeatherApiService;
 import com.github.marcel1504.weatherapp.producer.service.weather.mapping.WeatherMappingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,11 @@ public class WeatherServiceImpl implements WeatherService {
     private WeatherMappingService weatherMappingService;
 
     @Autowired
-    private WeatherHttpService weatherHttpService;
+    private WeatherApiService weatherApiService;
 
     @Override
     public void updateLatestWeatherData() {
-        weatherHttpService.putWeatherDataSync(
+        weatherApiService.putWeatherDataSync(
                 weatherMappingService.mapFromWeatherEntityToWeatherDTO(weatherRepository.findLatestWeather(15))
         );
     }
@@ -33,8 +33,8 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     public void syncWeatherData() {
         List<WeatherEntity> list = weatherRepository.findAll();
-        weatherHttpService.putWeatherDataSync(
+        log.info("Starting synchronization of {} weather data items with consumers", list.size());
+        weatherApiService.putWeatherDataSync(
                 weatherMappingService.mapFromWeatherEntityToWeatherDTO(list));
-        log.info("Started synchronization of {} weather data items with consumer", list.size());
     }
 }
