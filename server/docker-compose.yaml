@@ -1,0 +1,41 @@
+version: '3.5'
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    hostname: portainer
+    restart: always
+    expose:
+      - "9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer:/data
+  http-proxy-server:
+    image: nginx:alpine
+    restart: always
+    depends_on:
+      - portainer
+      - weewx
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+    expose:
+      - "80"
+    ports:
+      - "80:80"
+  weewx:
+    image: felddy/weewx
+    hostname: weewx
+    restart: always
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data
+    environment:
+      - TIMEZONE=Europe/Berlin
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+
+volumes:
+  portainer:
