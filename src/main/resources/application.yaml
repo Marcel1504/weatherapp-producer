@@ -1,7 +1,7 @@
 spring:
   datasource:
     driverClassName: 'org.sqlite.JDBC'
-    url: 'jdbc:sqlite:S:\weatherapp\media\weewx.sdb?cache=shared'
+    url: 'jdbc:sqlite:S:/weatherapp/media/weewx.sdb'
   jpa:
     properties:
       hibernate:
@@ -12,8 +12,8 @@ spring:
 
 weatherapp:
   cronjob:
-    weatherDataUpdate: '0 0 3 * * *'
-    weatherDataSync: '0 0/1 * * * *'
+    weatherDataUpdate: '0 0/1 * * * *'
+    weatherDataSync: '0 0 3 * * *'
     weatherCamUpload: '0 0 3 * * *'
   inputFilePath:
     weatherCam: 'S:\weatherapp\media\current.jpg'

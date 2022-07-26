@@ -38,7 +38,7 @@ tasks.named("bootBuildImage") {
 	imageName = "marcel1504/${project.name}:${project.version}"
 }
 
-task bootBuildImageRPi(type: Exec) {
+task bootBuildImageRPiLatest(type: Exec) {
 	dependsOn(bootJar)
 	commandLine "docker",
 			"build",
@@ -47,4 +47,12 @@ task bootBuildImageRPi(type: Exec) {
 			"-t",
 			"marcel1504/${project.name}:latest",
 			"."
+}
+
+task buildCamImageLatest(type: Exec) {
+	commandLine "docker",
+			"build",
+			"-t",
+			"marcel1504/${project.name}-cam:latest",
+			"./cam"
 }

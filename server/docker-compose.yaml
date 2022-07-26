@@ -45,16 +45,31 @@ services:
     environment:
       - TZ=Europe/Berlin
       - SPRING_DATASOURCE_URL=jdbc:sqlite:/data/weewx.sdb?cache=shared
-      - WEATHERAPP_INPUTFILEPATH_WEATHERCAM=/data/current.jpg
+      - WEATHERAPP_INPUTFILEPATH_WEATHERCAM=/media/current.jpg
       - WEATHERAPP_CONSUMERSERVICES_0_URL=${CONSUMER_URL}
       - WEATHERAPP_CONSUMERSERVICES_0_USERNAME=${CONSUMER_USERNAME}
       - WEATHERAPP_CONSUMERSERVICES_0_PASSWORD=${CONSUMER_PASSWORD}
+      - WEATHERAPP_CRONJOB_WEATHERDATAUPDATE=0 0/10 * * * *
+      - WEATHERAPP_CRONJOB_WEATHERDATASYNC=0 0 3 * * *
+      - WEATHERAPP_CRONJOB_WEATHERCAMUPLOAD=0 0/15 * * * *
     volumes:
       - type: bind
         source: ./data/weewx.sdb
         target: /data/weewx.sdb
       - type: bind
-        source: ./data/current.jpg
-        target: /data/current.jpg
+        source: ./data/cam
+        target: /media
+  producer-cam:
+    image: marcel1504/weatherapp-producer-cam:latest
+    restart: always
+    hostname: producer-cam
+    volumes:
+      - type: bind
+        source: ${CAM_JPG_INPUT_DIRECTORY}
+        target: /media/input
+      - type: bind
+        source: ./data/cam
+        target: /media/output
+
 volumes:
   portainer:

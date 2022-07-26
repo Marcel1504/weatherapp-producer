@@ -31,8 +31,7 @@ The access permissions of WH1080 USB device must be updated to allow access insi
         sudo lsusb
 
    Example output:
-
-        > Bus 002 Device 003: ID 1941:8021 Dream Link WH1080 Weather Station / USB Missile Launcher
+   > Bus 002 Device 003: ID 1941:8021 Dream Link WH1080 Weather Station / USB Missile Launcher
 
 3. Find out vendor ID and product ID using Bus and Device Number
 
@@ -54,12 +53,14 @@ The access permissions of WH1080 USB device must be updated to allow access insi
 
 2. Copy contents from weatherapp-producer.git (Directory /server) to the working directory, update permissions
 
+        cd /opt/weatherstation
         sudo chmod +x *.sh
 
-3. Create data directory in working directory and grant permissions
+3. Create data and cam directory in working directory and grant permissions
 
         sudo mkdir /opt/weatherstation/data
-        sudo chmod -R 777 /opt/weatherstation/data		
+        sudo mkdir /opt/weatherstation/data/cam
+        sudo chmod -R 777 /opt/weatherstation/data
 
 ## Configure application
 
@@ -72,6 +73,8 @@ The access permissions of WH1080 USB device must be updated to allow access insi
         CONSUMER_URL=<add URL of weather consumer api>
         CONSUMER_USERNAME=<add username for weather consumer api>
         CONSUMER_PASSWORD=<add password for weather consumer api>
+
+        CAM_JPG_INPUT_DIRECTORY=<input directory of weather cam JPG files>
 
 2. Run docker compose to setup weewx
 
