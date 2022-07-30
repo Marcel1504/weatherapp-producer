@@ -11,21 +11,6 @@ import java.util.List;
 @Repository
 public interface WeatherRepository extends JpaRepository<WeatherEntity, Long> {
 
-    @Override
-    @Query(
-            value = "SELECT " +
-                    "round(w.outTemp,1) AS outTemp, " +
-                    "round(w.outHumidity,0) AS outHumidity, " +
-                    "round(w.barometer,1) AS barometer, " +
-                    "round(w.rain,3) AS rain, " +
-                    "round(w.windDir,0) AS windDir, " +
-                    "round(w.windGust,1) AS windGust, " +
-                    "w.dateTime " +
-                    "FROM archive w",
-            countQuery = "SELECT * FROM archive w",
-            nativeQuery = true)
-    List<WeatherEntity> findAll();
-
     @Query(
             value = "SELECT " +
                     "round(w.outTemp,1) AS outTemp, " +
@@ -36,11 +21,11 @@ public interface WeatherRepository extends JpaRepository<WeatherEntity, Long> {
                     "round(w.windGust,1) AS windGust, " +
                     "w.dateTime " +
                     "FROM archive w " +
-                    "ORDER BY w.dateTime DESC " +
-                    "LIMIT :limit",
+                    "WHERE w.dateTime >= :dateTime " +
+                    "ORDER BY w.dateTime DESC",
             countQuery = "SELECT * FROM archive w " +
-                    "ORDER BY w.dateTime DESC" +
-                    "LIMIT :limit",
+                    "WHERE w.dateTime >= :dateTime " +
+                    "ORDER BY w.dateTime DESC",
             nativeQuery = true)
-    List<WeatherEntity> findLatestWeather(@Param(value = "limit") int limit);
+    List<WeatherEntity> findAllAfter(@Param("dateTime") Long dateTime);
 }

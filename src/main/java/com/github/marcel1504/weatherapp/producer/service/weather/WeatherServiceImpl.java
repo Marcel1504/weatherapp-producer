@@ -6,8 +6,11 @@ import com.github.marcel1504.weatherapp.producer.service.api.weather.WeatherApiS
 import com.github.marcel1504.weatherapp.producer.service.weather.mapping.WeatherMappingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Slf4j
@@ -23,18 +26,25 @@ public class WeatherServiceImpl implements WeatherService {
     @Autowired
     private WeatherApiService weatherApiService;
 
+    @Value("${weatherapp.limits.weatherDataUpdateMaxAgeHours}")
+    private Integer weatherDataUpdateMaxAgeHours;
+
+    @Value("${weatherapp.limits.weatherDataSyncMaxAgeHours}")
+    private Integer weatherDataSyncMaxAgeHours;
+
     @Override
     public void updateLatestWeatherData() {
-        weatherApiService.putWeatherDataSync(
-                weatherMappingService.mapFromWeatherEntityToWeatherDTO(weatherRepository.findLatestWeather(15))
-        );
+        Long dateTime = LocalDateTime.now().minusHours(weatherDataUpdateMaxAgeHours).toEpochSecond(ZoneOffset.UTC);
+        List<WeatherEntity> list = weatherRepository.findAllAfter(dateTime);
+        log.info("Starting update of {} weather data items with consumers", list.size());
+        weatherApiService.putWeatherDataSync(weatherMappingService.mapFromWeatherEntityToWeatherDTO(list));
     }
 
     @Override
     public void syncWeatherData() {
-        List<WeatherEntity> list = weatherRepository.findAll();
+        Long dateTime = LocalDateTime.now().minusHours(weatherDataSyncMaxAgeHours).toEpochSecond(ZoneOffset.UTC);
+        List<WeatherEntity> list = weatherRepository.findAllAfter(dateTime);
         log.info("Starting synchronization of {} weather data items with consumers", list.size());
-        weatherApiService.putWeatherDataSync(
-                weatherMappingService.mapFromWeatherEntityToWeatherDTO(list));
+        weatherApiService.putWeatherDataSync(weatherMappingService.mapFromWeatherEntityToWeatherDTO(list));
     }
 }

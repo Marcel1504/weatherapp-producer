@@ -24,3 +24,6 @@ weatherapp:
   multiplier: # factors to convert the database values to the required format
     rain: 10 # liters per square meters
     wind: 1 # kmh
+  limits:
+    weatherDataUpdateMaxAgeHours: 3
+    weatherDataSyncMaxAgeHours: 2160 # 3 months
