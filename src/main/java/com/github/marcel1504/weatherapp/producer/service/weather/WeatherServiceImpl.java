@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Slf4j
@@ -34,7 +34,10 @@ public class WeatherServiceImpl implements WeatherService {
 
     @Override
     public void updateLatestWeatherData() {
-        Long dateTime = LocalDateTime.now().minusHours(weatherDataUpdateMaxAgeHours).toEpochSecond(ZoneOffset.UTC);
+        Long dateTime = LocalDateTime
+                .now()
+                .minusHours(weatherDataUpdateMaxAgeHours)
+                .toEpochSecond(OffsetDateTime.now().getOffset());
         List<WeatherEntity> list = weatherRepository.findAllAfter(dateTime);
         log.info("Starting update of {} weather data items with consumers", list.size());
         weatherApiService.putWeatherDataSync(weatherMappingService.mapFromWeatherEntityToWeatherDTO(list));
@@ -42,7 +45,10 @@ public class WeatherServiceImpl implements WeatherService {
 
     @Override
     public void syncWeatherData() {
-        Long dateTime = LocalDateTime.now().minusHours(weatherDataSyncMaxAgeHours).toEpochSecond(ZoneOffset.UTC);
+        Long dateTime = LocalDateTime
+                .now()
+                .minusHours(weatherDataSyncMaxAgeHours)
+                .toEpochSecond(OffsetDateTime.now().getOffset());
         List<WeatherEntity> list = weatherRepository.findAllAfter(dateTime);
         log.info("Starting synchronization of {} weather data items with consumers", list.size());
         weatherApiService.putWeatherDataSync(weatherMappingService.mapFromWeatherEntityToWeatherDTO(list));
