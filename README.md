@@ -56,10 +56,9 @@ The access permissions of WH1080 USB device must be updated to allow access insi
         cd /opt/weatherstation
         sudo chmod +x *.sh
 
-3. Create data and cam directory in working directory and grant permissions
+3. Create data directory in working directory and grant permissions
 
         sudo mkdir /opt/weatherstation/data
-        sudo mkdir /opt/weatherstation/data/cam
         sudo chmod -R 777 /opt/weatherstation/data
 
 ## Configure application
@@ -73,15 +72,13 @@ The access permissions of WH1080 USB device must be updated to allow access insi
         CONSUMER_URL=<add URL of weather consumer api>
         CONSUMER_USERNAME=<add username for weather consumer api>
         CONSUMER_PASSWORD=<add password for weather consumer api>
-
-        CAM_JPG_INPUT_DIRECTORY=<input directory of weather cam JPG files>
-
-2. Run docker compose to setup weewx
+   
+3. Run docker compose to setup weewx
 
         cd /opt/weatherstation
         sudo docker-compose run weewx
 
-3. Update properties of weewx.conf
+4. Update properties of weewx.conf
 
         sudo nano /opt/weatherstation/data/weewx.conf
 
