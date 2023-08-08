@@ -30,6 +30,9 @@ public class WeatherEntity {
     @Column(name = "rain")
     private Double rainfall;
 
+    @Column(name = "rainRate")
+    private Double rainRate;
+
     @Column(name = "windGust")
     private Double wind;
 

@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class WeatherDTO {
+public class WeatherDto {
     private Double temperature;
     private Integer humidity;
     private Double rainfall;
+    private Double rainRate;
     private Double wind;
     private Integer windDirection;
     private Double pressure;

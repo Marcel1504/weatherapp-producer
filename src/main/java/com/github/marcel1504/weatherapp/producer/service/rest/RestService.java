@@ -7,5 +7,5 @@ import java.util.List;
 public interface RestService {
     List<RestTemplate> getAllRestTemplates();
 
-    void putAll(String url, Object body);
+    void postAll(String url, Object body);
 }

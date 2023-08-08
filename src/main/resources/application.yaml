@@ -13,17 +13,10 @@ spring:
 weatherapp:
   cronjob:
     weatherDataUpdate: '0 0/1 * * * *'
-    weatherDataSync: '0 0 3 * * *'
-    weatherCamUpload: '0 0 3 * * *'
-  inputFilePath:
-    weatherCam: 'S:\weatherapp\media\current.jpg'
   consumerServices:
-    - url: 'https://localhost/w/consumer'
-      username: 'test1'
-      password: 'test1'
+    - url: 'http://localhost:8082'
+      username: 'ber1'
+      password: 'test'
   multiplier: # factors to convert the database values to the required format
     rain: 10 # liters per square meters
     wind: 1 # kmh
-  limits:
-    weatherDataUpdateMaxAgeHours: 3
-    weatherDataSyncMaxAgeHours: 2160 # 3 months

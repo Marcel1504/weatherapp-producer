@@ -9,7 +9,7 @@ repositories {
 }
 
 group = 'com.github.marcel1504.weatherapp'
-version = '1.2.0'
+version = '2.0.0'
 sourceCompatibility = '11'
 
 dependencies {
@@ -38,21 +38,28 @@ tasks.named("bootBuildImage") {
 	imageName = "marcel1504/${project.name}:${project.version}"
 }
 
-task bootBuildImageRPiLatest(type: Exec) {
+task bootBuildImageARMv7l(type: Exec) {
 	dependsOn(bootJar)
 	commandLine "docker",
 			"build",
 			"--build-arg",
 			"JAR_FILE=build/libs/${project.name}-${project.version}.jar",
+			"--build-arg",
+			"IMAGE=adoptopenjdk/openjdk11:armv7l-debian-jre-11.0.18_10",
 			"-t",
-			"marcel1504/${project.name}:latest",
+			"marcel1504/${project.name}:${project.version}-armv7l",
 			"."
 }
 
-task buildCamImageLatest(type: Exec) {
+task bootBuildImageARM64(type: Exec) {
+	dependsOn(bootJar)
 	commandLine "docker",
 			"build",
+			"--build-arg",
+			"JAR_FILE=build/libs/${project.name}-${project.version}.jar",
+			"--build-arg",
+			"IMAGE=arm64v8/openjdk:11-jre-slim",
 			"-t",
-			"marcel1504/${project.name}-cam:latest",
-			"./cam"
+			"marcel1504/${project.name}:${project.version}-arm64",
+			"."
 }

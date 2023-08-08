@@ -44,7 +44,7 @@ services:
       - '8080'
     environment:
       - TZ=Europe/Berlin
-      - SPRING_DATASOURCE_URL=jdbc:sqlite:/data/weewx.sdb?cache=shared
+      - SPRING_DATASOURCE_URL=jdbc:sqlite:/data/weewx.sdb
       - WEATHERAPP_INPUTFILEPATH_WEATHERCAM=/media/current.jpg
       - WEATHERAPP_CONSUMERSERVICES_0_URL=${CONSUMER_URL}
       - WEATHERAPP_CONSUMERSERVICES_0_USERNAME=${CONSUMER_USERNAME}

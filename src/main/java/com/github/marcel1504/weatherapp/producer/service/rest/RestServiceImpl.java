@@ -34,10 +34,10 @@ public class RestServiceImpl implements RestService {
     }
 
     @Override
-    public void putAll(String url, Object body) {
+    public void postAll(String url, Object body) {
         this.getAllRestTemplates().forEach(t -> {
             try {
-                t.put(url, body);
+                t.postForLocation(url, body);
             } catch (RestClientException e) {
                 log.warn("Could not send put request in template: {}", e.getMessage());
             }
